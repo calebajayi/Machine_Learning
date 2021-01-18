@@ -60,8 +60,10 @@ import matplotlib.pyplot as plt
 plt.plot(r.history['loss'], label='loss')
 plt.plot(r.history['val_loss'], label='val_loss')
 plt.legend()
+plt.show()
 
 # plot the accuracy too
 plt.plot(r.history['accuracy'], label='acc')
 plt.plot(r.history['val_accuracy'], label='val_acc')
 plt.legend()
+plt.show()
