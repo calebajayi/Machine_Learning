@@ -2,11 +2,8 @@
 import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # ignore error for gpu with tensorflow if you dont have a gpu
-import tensorflow as tf
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import wget
 import keras
 
 fashion_mnist = keras.datasets.fashion_mnist  # load the dataset
@@ -40,18 +37,27 @@ model.compile(optimizer='adam',
 model.fit(train_images, train_labels, epochs=10)
 
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=1)
-print('test accuracy:', test_acc)
-predictions = model.predict(test_images)
-print(predictions[0])
-print(np.argmax(predictions[0]))  # simply returns the index of the maximum value from a numpy array.
-print(test_labels[0])  # we can check if this is correct by looking at the value of the co-responding test label.
+print('test accuracy:', test_acc)  # print test accuracy
 
+predictions = model.predict(test_images)
+# print(predictions[0])
+# print(np.argmax(predictions[0]))  # simply returns the index of the maximum value from a numpy array.
+# print(test_labels[0])  # we can check if this is correct by looking at the value of the co-responding test label.
+# print(class_names[np.argmax(predictions[2])])  # what are we predicting the image is?
+# plt.figure()
+# plt.imshow(test_images[2])  # what the image actually is
+# plt.colorbar()
+# plt.grid(False)
+# plt.show()
+
+# Function to predict the output of the model depending on user number input
 COLOR = 'white'
 plt.rcParams['text.color'] = COLOR
 plt.rcParams['axes.labelcolor'] = COLOR
 
 
 def predict(model, image, correct_label):
+    global class_names
     class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                    'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
     prediction = model.predict(np.array([image]))
@@ -63,8 +69,8 @@ def predict(model, image, correct_label):
 def show_image(img, label, guess):
     plt.figure()
     plt.imshow(img, cmap=plt.cm.binary)
-    plt.title('Expected: ' + label)
-    plt.xlabel('Guess: ' + guess)
+    print("Expected: ", label)
+    print("Guess: ", guess)
     plt.colorbar()
     plt.grid(False)
     plt.show()
